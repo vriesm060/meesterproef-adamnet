@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-		"dev": "watch 'npm run build'",
+    "dev": "watch 'npm run build'",
     "watch-js": "watchify public/js/*.js -o public/dist/bundle.js -dv",
     "watch": "npm run watch-js",
     "build": "browserify public/js/*.js -o public/dist/bundle.js"
@@ -20,5 +20,8 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "node-fetch": "^2.1.2"
+  },
+  "devDependencies": {
+    "dotenv": "^5.0.1"
   }
 }
