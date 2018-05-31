@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 
 // Require .env files:
-require('dotenv').config({ path: './vars.env' });
+require('dotenv').config({ path: './.env' });
 
 // view engine setup > templates weergeven
 app.set('views', 'views');
