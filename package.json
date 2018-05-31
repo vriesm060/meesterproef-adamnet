@@ -7,7 +7,7 @@
     "start": "nodemon app.js",
     "dev": "watch 'npm run build'",
     "watch-js": "watchify public/js/*.js -o public/dist/bundle.js -dv",
-    "watch": "npm run watch-js",
+    "watch": "npm run build | npm run watch-js",
     "build": "browserify public/js/*.js -o public/dist/bundle.js"
   },
   "repository": {
