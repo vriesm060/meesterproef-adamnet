@@ -8,6 +8,6 @@ var controller = require('../controllers/controller.js');
 router.get('/', controller.homePage);
 
 // GET detail page:
-router.get('/:id', controller.detailPage);
+router.get('/detail/:id', controller.detailPage);
 
 module.exports = router;

@@ -18,4 +18,6 @@ var routes = require('./routes');
 app.use('/', routes);
 
 //run
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, function () {
+  console.log('runs');
+});
