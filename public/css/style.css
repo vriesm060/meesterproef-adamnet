@@ -1,0 +1,13 @@
+#map {
+	width: 80vw;
+	height: 50vh;
+	margin-left: 10vw;
+}
+
+.mapboxgl-ctrl-logo {
+	display: none !important;
+}
+
+.mapboxgl-ctrl-bottom-right {
+	display: none;
+}
