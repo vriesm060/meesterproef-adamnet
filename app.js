@@ -2,6 +2,9 @@
 var express = require('express');
 var app = express();
 
+// Require .env files:
+require('dotenv').config({ path: './vars.env' });
+
 // view engine setup > templates weergeven
 app.set('views', 'views');
 app.set('view engine', 'ejs');
@@ -17,6 +20,4 @@ app.use('/', indexRouter);
 app.use('/detail', detailRouter);
 
 //run
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-})
+app.listen(process.env.PORT);
