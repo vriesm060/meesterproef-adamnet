@@ -11,13 +11,11 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
 
-//de routes defineren (zelfde structuur als mappen)
-var indexRouter = require('./routes/index');
-var detailRouter = require('./routes/detail');
+// Require routes:
+var routes = require('./routes');
 
-// connect routers to routes, weblinkjes
-app.use('/', indexRouter);
-app.use('/detail', detailRouter);
+// Use routes:
+app.use('/', routes);
 
 //run
 app.listen(process.env.PORT);
