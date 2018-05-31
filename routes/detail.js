@@ -54,7 +54,7 @@ router.get('/:id', function(req, res, next) {
 		});
 
 	} else {
-	 res.render('detail/detail', {
+	 res.render('detail', {
 		 posters: rows,
 		 id: id,
 	 });
