@@ -5,8 +5,7 @@
 	var map = {
 		mapboxAccessToken: 'pk.eyJ1IjoibWF4ZGV2cmllczk1IiwiYSI6ImNqZWZydWkyNjF3NXoyd28zcXFqdDJvbjEifQ.Dl3DvuFEqHVAxfajg0ESWg',
 		map: L.map('map', {
-			zoomControl: false,
-			dragging: false
+			zoomControl: false
 		}),
 		init: function () {
 			// Set the original view of the map:
@@ -56,16 +55,24 @@
 					fillColor: '#f03',
 					fillOpacity: 0.4,
 					clickable: false,
-					radius: 100,
+					radius: 1000/2,
 					zIndexOffset: 1000
 			}).addTo(self.map);
 
 			//draggable
+			circle.addEventListener('mousedown', function () {
+				self.map.dragging.disable();
+			});
+
+			circle.addEventListener('mouseup', function () {
+				self.map.dragging.enable();
+			});
+
 			circle.on({
 				 mousedown: function () {
 					 self.map.on('mousemove', function (e) {
-						 centerPoint.lat = e.latlng.lat
-						 centerPoint.lng = e.latlng.lng
+						 centerPoint.lat = e.latlng.lat;
+						 centerPoint.lng = e.latlng.lng;
 						 circle.setLatLng(e.latlng);
 					 });
 				 }
@@ -83,7 +90,7 @@
 			})
 
 			function changeRadius(el) {
-				var meters = el.target.value * 100;
+				var meters = el.target.value / 2 * 1000;
 				circle.setRadius(meters);
 				map.createStreets(data, circle, meters);
 			}
@@ -91,11 +98,12 @@
 			map.createStreets(data, circle);
 		},
 		createStreets: function(data, circle, userInput) {
+			var selectedStreets = [];
 			var circle_lat_long = circle.getLatLng();
 			var counter_points_in_circle = 0;
 			var meters_user_set = userInput;
 			if(meters_user_set == undefined){
-				meters_user_set = 100;
+				meters_user_set = 1000/2;
 			}
 			var geojsonMarkerOptions = {
 				radius: 1
@@ -110,7 +118,8 @@
 						var distance_from_layer_circle = center.distanceTo(circle_lat_long);
 
 						if (distance_from_layer_circle <= meters_user_set) {
-							console.log('uri: ' + feature.properties.link);
+							var uri = feature.properties.link;
+							selectedStreets.push(uri);
 							counter_points_in_circle += 1;
 						}
 					}
@@ -134,12 +143,20 @@
 
 			//Bring to back
 			streets.bringToBack();
-			console.log(circle.getLatLng(), userInput);
-
 
 			//Count number of streets
+			function removeDuplicates(arr){
+		    let unique_array = []
+		    for(var i = 0;i < arr.length; i++){
+		    	if(unique_array.indexOf(arr[i]) == -1){
+		      	unique_array.push(arr[i])
+		       }
+		    }
+				console.log(unique_array);
+		    return unique_array.length
+			}
 			var number_of_streets = document.querySelector('.count-streets');
-			number_of_streets.innerHTML = counter_points_in_circle + " straten";
+			number_of_streets.innerHTML = removeDuplicates(selectedStreets) + " straten";
 		},
 		handleHoverOverStreet: function (e) {
 			// var point = L.point(0, -5);
