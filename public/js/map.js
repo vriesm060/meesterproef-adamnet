@@ -1,4 +1,4 @@
-var selectedStreets = [];
+var uniqueStreets = [];
 
 (function(){
 
@@ -9,9 +9,13 @@ var selectedStreets = [];
 		map: L.map('map', {
 			zoomControl: false
 		}),
+		centerPoint: {
+			lat: 52.370216,
+			lng: 4.895168
+		},
 		init: function () {
 			// Set the original view of the map:
-			this.map.setView([52.370216, 4.895168], 14);
+			this.map.setView([this.centerPoint.lat, this.centerPoint.lng], 14);
 
 			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + this.mapboxAccessToken, {
 				maxZoom: 20,
@@ -20,107 +24,80 @@ var selectedStreets = [];
 
 			L.control.zoom({
 				position: 'bottomright'
-			})
-			.addTo(this.map);
+			}).addTo(this.map);
 
-			this.data();
+			this.createCircle(this.data());
 		},
 		data: function() {
 			var data = window.data;
-			var rows = data.results.bindings;
-			var streets = rows.map(function (item) {
-				var streetName = item.name.value;
-				var link = item.street.value;
-				var slug = link.slice((link.indexOf('street/') + 7), link.lastIndexOf('/'));
-				var geo = item.wkt.value;
 
-				return {
-					'type': 'Feature',
-					'properties': {
-						'streetName': streetName,
-						'slug': slug,
-						'link': link
-					},
-					'geometry': wellknown(geo)
-				};
+			// Add geometry to data:
+			data.forEach(function (street) {
+				street.geometry = wellknown(street.geo);
 			});
-			this.createCircle(streets);
+
+			return data;
 		},
 		createCircle: function(data) {
 			var self = this;
 			var selectRadius = document.querySelector("#radius-selected");
-			var centerPoint = {lat: 52.370216, lng: 4.895168};
 
 			//create circle
-			var circle = L.circle([centerPoint.lat, centerPoint.lng], {
-					color: 'red',
-					fillColor: '#f03',
-					fillOpacity: 0.4,
-					clickable: false,
-					radius: 500/2,
-					zIndexOffset: 1000
-			}).addTo(self.map);
+			var circle = L.circle([this.centerPoint.lat, this.centerPoint.lng], {
+				color: 'red',
+				fillColor: '#f03',
+				fillOpacity: 0.4,
+				radius: 500/2
+			}).addTo(this.map);
 
-			//draggable
+			// Change the map's draggable function when you drag the radius:
 			circle.addEventListener('mousedown', function () {
 				self.map.dragging.disable();
 			});
-
 			circle.addEventListener('mouseup', function () {
 				self.map.dragging.enable();
 			});
 
-			circle.on({
-				 mousedown: function () {
-					 self.map.on('mousemove', function (e) {
-						 centerPoint.lat = e.latlng.lat;
-						 centerPoint.lng = e.latlng.lng;
-						 circle.setLatLng(e.latlng);
-					 });
-				 }
+			// Dragging the circle:
+			circle.on('mousedown', function () {
+				self.map.on('mousemove', function (e) {
+					circle.setLatLng(e.latlng);
+				});
 			});
-			self.map.on('mouseup',function(e){
-				var userInput = circle.getRadius();
-				map.createStreets(data, circle, userInput);
+
+			// Calculate the new center:
+			circle.on('mouseup', function () {
+				var latlng = circle.getLatLng();
+				var radius = circle.getRadius();
+				self.distanceFromCenterPoint(data, latlng, radius);
 				self.map.removeEventListener('mousemove');
+			});
+
+			selectRadius.addEventListener("change", function(e){
+				changeRadius(e);
 			})
 
-			circle.bringToFront();
-
-			selectRadius.addEventListener("change", function(el){
-				changeRadius(el);
-			})
-
-			function changeRadius(el) {
-				var meters = el.target.value / 2 * 1000;
+			function changeRadius(e) {
+				var meters = e.target.value / 2 * 1000;
 				circle.setRadius(meters);
-				map.createStreets(data, circle, meters);
+				self.distanceFromCenterPoint(data, self.centerPoint, meters);
 			}
 
-			map.createStreets(data, circle);
+			this.distanceFromCenterPoint(data, this.centerPoint);
 		},
-		createStreets: function(data, circle, userInput) {
-			var circle_lat_long = circle.getLatLng();
-			var counter_points_in_circle = 0;
-			var meters_user_set = userInput;
-			if(meters_user_set == undefined){
-				meters_user_set = 500/2;
-			}
-			var geojsonMarkerOptions = {
-				radius: 1
-			};
+		distanceFromCenterPoint: function(data, latlng, radius = 250) {
+			var counterStreetsInCircle = 0;
 
-			selectedStreets.splice(0, selectedStreets.length);
+			var selectedStreets = [];
+			uniqueStreets.splice(0, uniqueStreets.length);
 
-			//Count number of streets
+			// Count number of streets
 			function removeDuplicates(arr){
-				let unique_array = []
 				for(var i = 0;i < arr.length; i++){
-					if(unique_array.indexOf(arr[i]) == -1){
-						unique_array.push(arr[i]);
+					if(uniqueStreets.indexOf(arr[i]) == -1){
+						uniqueStreets.push(arr[i]);
 					 }
 				}
-				return unique_array;
 			}
 
 			//create geoJSON layer
@@ -129,12 +106,22 @@ var selectedStreets = [];
 					if(layer.feature.geometry.type !== "Point"){
 						var bounds = layer.getBounds();
 						var center = bounds.getCenter();
-						var distance_from_layer_circle = center.distanceTo(circle_lat_long);
+						var distanceFromRadius = center.distanceTo(latlng);
+						var percentageFromCenterPoint = Math.round((distanceFromRadius / radius) * 100);
 
-						if (distance_from_layer_circle <= meters_user_set) {
-							var uri = feature.properties.link;
-							selectedStreets.push(uri);
-							counter_points_in_circle += 1;
+						if (distanceFromRadius <= radius) {
+							console.log(feature.properties.streetName);
+							console.log('distance from radius: ', distanceFromRadius);
+							console.log(percentageFromCenterPoint);
+
+							var street = {
+								'uri': feature.properties.uri,
+								'disToCenter': percentageFromCenterPoint
+							};
+
+							selectedStreets.push(street);
+							removeDuplicates(selectedStreets);
+							counterStreetsInCircle++;
 						}
 					}
 				},
@@ -146,35 +133,15 @@ var selectedStreets = [];
 						lineJoin: 'square',
 						className: feature.properties.slug
 					}
-				},
-				pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); }
-			})
-			// .addTo(this.map)
-			.on('mouseover', this.handleHoverOverStreet)
-			.on('click', function (e) {
-				events.handleClickOnStreet(e.layer.feature);
+				}
 			});
 
-			//Bring to back
-			streets.bringToBack();
-
-			var number_of_streets = document.querySelector('.count-streets');
-			number_of_streets.innerHTML = selectedStreets.length + " straten";
-		},
-		handleHoverOverStreet: function (e) {
-			// var point = L.point(0, -5);
-			//
-			// L.popup({
-			// 	closeButton: false,
-			// 	offset: point
-			// })
-			// 	.setLatLng(e.latlng)
-			// 	.setContent(e.layer.feature.properties.streetName)
-			// 	.openOn(map.map);
+			var countStreets = document.querySelector('.count-streets');
+			countStreets.textContent = uniqueStreets.length + " straten";
 		}
 	};
 
 	map.init()
 })()
 
-module.exports = selectedStreets;
+module.exports = uniqueStreets;

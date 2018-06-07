@@ -1,4 +1,4 @@
-var selectedStreets = require('./map.js');
+var uniqueStreets = require('./map.js');
 
 (function () {
   var newStory = {
@@ -16,7 +16,7 @@ var selectedStreets = require('./map.js');
         var data = {
           'valMin': valMin,
           'valMax': valMax,
-          'selectedStreets': selectedStreets
+          'selectedStreets': uniqueStreets
         };
 
         var config = {
