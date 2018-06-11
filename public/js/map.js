@@ -5,7 +5,7 @@ var uniqueStreets = [];
 	"use strict"
 
 	var circleToPolygon = require('./circletopolygon.js');
-
+	var toWKT = require('./towkt.js');
 
 	var map = {
 		mapboxAccessToken: 'pk.eyJ1IjoibWF4ZGV2cmllczk1IiwiYSI6ImNqZWZydWkyNjF3NXoyd28zcXFqdDJvbjEifQ.Dl3DvuFEqHVAxfajg0ESWg',
@@ -53,46 +53,14 @@ var uniqueStreets = [];
 				radius: 500/2
 			}).addTo(this.map);
 
-			const coordinates = [52.370216,4.895168];
-			const radius = 250;                           // in meters
-			const numberOfEdges = 200;                     //optional that defaults to 32
-			let polygon = circleToPolygon(coordinates, radius, numberOfEdges);
-
-			console.log(polygon);
-			var polygonLeaflet = L.polygon(polygon.coordinates[0], {color: 'red'});
-
-			function toWKT (layer) {
-			    var lng, lat, coords = [];
-					if (layer instanceof L.Polygon || layer instanceof L.Polyline) {
-						var latlngs = layer.getLatLngs();
-					for (var i = 0; i < latlngs.length; i++) {
-							var latlngs1 = latlngs[i];
-							if (latlngs1.length){
-							for (var j = 0; j < latlngs1.length; j++) {
-								coords.push(latlngs1[j].lng + " " + latlngs1[j].lat);
-								if (j === 0) {
-									lng = latlngs1[j].lng;
-									lat = latlngs1[j].lat;
-								}
-							}}
-							else
-							{
-								coords.push(latlngs[i].lng + " " + latlngs[i].lat);
-								if (i === 0) {
-									lng = latlngs[i].lng;
-									lat = latlngs[i].lat;
-								}}
-					};
-						if (layer instanceof L.Polygon) {
-							return "POLYGON((" + coords.join(",") + "," + lng + " " + lat + "))";
-						} else if (layer instanceof L.Polyline) {
-							return "LINESTRING(" + coords.join(",") + ")";
-						}
-					} else if (layer instanceof L.Marker) {
-						return "POINT(" + layer.getLatLng().lng + " " + layer.getLatLng().lat + ")";
-					}
-				};
-
+			//circle to polygon
+			var coordinatesPolygon = [52.370216,4.895168];
+			var radiusPolygon = 250; // in meters
+			var numberOfEdges = 10; //optional that defaults to 32
+			var polygon = circleToPolygon(coordinatesPolygon, radiusPolygon, numberOfEdges);
+			//create polygon in leaflet
+			var polygonLeaflet = L.polygon(polygon.coordinates[0], {color: 'blue'}).addTo(this.map);
+			//leaflet polygon to wkt
 			console.log(toWKT(polygonLeaflet));
 
 			// Change the map's draggable function when you drag the radius:
@@ -107,6 +75,7 @@ var uniqueStreets = [];
 			circle.on('mousedown', function () {
 				self.map.on('mousemove', function (e) {
 					circle.setLatLng(e.latlng);
+					coordinatesPolygon = e.latlng;
 				});
 			});
 
@@ -125,6 +94,7 @@ var uniqueStreets = [];
 			function changeRadius(e) {
 				var meters = e.target.value / 2 * 1000;
 				circle.setRadius(meters);
+				radiusPolygon = meters;
 				self.distanceFromCenterPoint(data, self.centerPoint, meters);
 			}
 
