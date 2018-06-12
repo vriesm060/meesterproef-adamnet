@@ -9,13 +9,13 @@ exports.location = async function (newStoryData) {
 	  .then((resp) => resp.json()) // transform the data into json
     .then(function (data) {
 
-			var allDataMappedData = data.results.bindings;
+			var allData = data.results.bindings;
 
 			var allDataMappedDataMapped = {
 				years: {}
 			};
 
-			dataFilter.forEach(function(item, i, self) {
+			allData.forEach(function(item, i, self) {
 		  	var year = item.start.value.split('-')[0];
 				var chapter;
 
