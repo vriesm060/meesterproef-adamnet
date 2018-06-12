@@ -11,7 +11,7 @@ exports.location = async function (newStoryData) {
 
 			var allData = data.results.bindings;
 
-			var allDataMappedDataMapped = {
+			var allDataMapped = {
 				years: {}
 			};
 
@@ -19,8 +19,8 @@ exports.location = async function (newStoryData) {
 		  	var year = item.start.value.split('-')[0];
 				var chapter;
 
-				if (item.street.value == dataFilter[0].street.value) {
-					chapter = dataFilter[0].streetLabel.value;
+				if (item.street.value == allData[0].street.value) {
+					chapter = allData[0].streetLabel.value;
 				} else {
 					chapter = 'de overige straten';
 				}
