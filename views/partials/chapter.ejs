@@ -1,10 +1,10 @@
-<article id="<%- Object.keys(dataFirstQuery.years)[i] %>-<%- Object.keys(objectYears)[j].replace(/\s/g,'') %>"class="chapter">
+<article id="<%- Object.keys(dataFirstQuery)[i] %>-<%- Object.keys(objectYears)[j].replace(/\s/g,'') %>" class="chapter">
 	<div class="title-sticky">
 		<img class="crosses" src="/images/crosses.svg"/>
 		<h2>We bevinden ons op de <strong><%- Object.keys(objectYears)[j] %></strong></h2>
 	</div>
 
-	<form class="data" action="/create-story" method="post">
+	<form class="data" action="/create-story/<%- id %>" method="post">
 		<ul>
 			<% var objectChapters = objectYears[Object.keys(objectYears)[j]] %>
 			<% for(var k = 0; k < Object.keys(objectChapters).length; k++) { %>

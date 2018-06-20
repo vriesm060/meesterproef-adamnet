@@ -18,14 +18,14 @@
 				</svg>
 			</button>
 			<ol class="menu">
-				<a class="save-story-btn" role="button" href="/save-story">Verhaal opslaan</a>
-				<% for(var i = 0; i < Object.keys(dataFirstQuery.years).length; i++) { %>
+				<a class="save-story-btn" role="button" href="/save-story/<%- id %>">Verhaal opslaan</a>
+				<% for(var i = 0; i < Object.keys(dataFirstQuery).length; i++) { %>
 					<li>
 						<details>
-						  <summary><h1 class="year-title"><%- Object.keys(dataFirstQuery.years)[i] %></h1></summary>
-								<% var objectYears = dataFirstQuery.years[Object.keys(dataFirstQuery.years)[i]]; %>
+						  <summary><h1 class="year-title"><%- Object.keys(dataFirstQuery)[i] %></h1></summary>
+								<% var objectYears = dataFirstQuery[Object.keys(dataFirstQuery)[i]]; %>
 								<% for(var j = 0; j < Object.keys(objectYears).length; j++) { %>
-									<a href="#<%- Object.keys(dataFirstQuery.years)[i] %>-<%- Object.keys(objectYears)[j].replace(/\s/g,'') %>"><%- Object.keys(objectYears)[j] %></a>
+									<a href="#<%- Object.keys(dataFirstQuery)[i] %>-<%- Object.keys(objectYears)[j].replace(/\s/g,'') %>"><%- Object.keys(objectYears)[j] %></a>
 								<% } %>
 								<button class="add-chapter-btn" type="button">+</button>
 						</details>
@@ -36,7 +36,7 @@
 
 		<main class="contents">
 			<section class="personal-data">
-				<form action="/create-story" method="post">
+				<form action="/create-story/<%- id %>" method="post">
 					<input class="title" type="text" name="title" placeholder="Geef jouw verhaal een titel.." autocomplete="off">
 
 					<div>
@@ -51,9 +51,9 @@
 					<button type="submit">Opslaan</button>
 				</form>
 			</section>
-			<% for(var i = 0; i < Object.keys(dataFirstQuery.years).length; i++) { %>
-				<section id="<%- Object.keys(dataFirstQuery.years)[i] %>" class="year <%- Object.keys(dataFirstQuery.years)[i] %>">
-					<% var objectYears = dataFirstQuery.years[Object.keys(dataFirstQuery.years)[i]]; %>
+			<% for(var i = 0; i < Object.keys(dataFirstQuery).length; i++) { %>
+				<section id="<%- Object.keys(dataFirstQuery)[i] %>" class="year <%- Object.keys(dataFirstQuery)[i] %>">
+					<% var objectYears = dataFirstQuery[Object.keys(dataFirstQuery)[i]]; %>
 					<% for(var j = 0; j < Object.keys(objectYears).length; j++) { %>
 
 						<%- include('partials/chapter.ejs', {i: i, j: j, objectYears: objectYears}) %>

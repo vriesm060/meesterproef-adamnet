@@ -4,10 +4,6 @@ var shortid = require('shortid');
 var sparqlqueries = require('./sparql');
 var chapters = require('./chapters.js');
 
-var newStoryData = {};
-
-var stories = [];
-
 /*
   Story data structure:
   ---------------------
@@ -35,6 +31,10 @@ var stories = [];
   }
 */
 
+// var newStoryData = {};
+
+var database = [];
+
 exports.homePage = function (req, res, next) {
   res.render('index');
 }
@@ -61,41 +61,87 @@ exports.searchLocationPage = function (req, res, next) {
 }
 
 exports.postCreateStoryPage = function (req, res, next) {
-  newStoryData = req.body;
-  res.redirect('/create-story');
+  console.log('client post works');
+  // newStoryData = req.body;
+
+  // Create a stories array in session:
+  if (!req.session.stories) {
+    req.session.stories = [];
+  }
+
+  // Create id for new story:
+  var id = shortid.generate();
+
+  // Create a story object, which we will fill in later:
+  var story = {
+    "id": id,
+    "key": null,
+    "title": null,
+    "meta": {},
+    "newStoryData": req.body,
+    "years": {}
+  };
+
+  // Push story object in stories array in session:
+  req.session.stories.push(story);
+
+  res.redirect('/create-story/' + id);
 }
 
 exports.getCreateStoryPage = async function (req, res, next) {
-  var result = await chapters.location(newStoryData);
+  // Check if given id exists in database:
+  var checkDatabase = database.filter(function (story) {
+    if (story.id == req.params.id) {
+      return story;
+    }
+  });
 
-  req.session.story = {
-    "years": result.years
-  };
+  var data;
+
+  if (checkDatabase[0] !== undefined) {
+    console.log('edit existing story: ', checkDatabase[0].id);
+    data = checkDatabase[0].years;
+  } else {
+    console.log('create new story with id: ', req.params.id);
+
+    var currentStory = req.session.stories.filter(function (story) {
+      if (story.id == req.params.id) {
+        return story;
+      }
+    });
+
+    var result = await chapters.location(currentStory[0].newStoryData);
+    currentStory[0].years = result.years;
+    data = currentStory[0].years;
+  }
 
   res.render('create-story', {
-    dataFirstQuery: result
+    dataFirstQuery: data,
+    id: req.params.id
   });
 }
 
 exports.saveStoryPage = function (req, res, next) {
-  // Generate new id:
-  var id = shortid.generate();
-
   // Generate new key:
   var key = uuid();
 
-  // Add id and key to story data:
-  req.session.story.id = id;
-  req.session.story.key = key;
+  var currentStory = req.session.stories.filter(function (story) {
+    if (story.id == req.params.id) {
+      return story;
+    }
+  });
+
+  // Add key to story data:
+  currentStory[0].key = key;
 
   // Temporary empty database for dev:
-  stories.splice(0, stories.length);
+  // database.splice(0, database.length);
 
   // Push the story object in temporary database:
-  stories.push(req.session.story);
+  database.push(currentStory[0]);
 
   // Create the new url:
-  var url = req.get('host') + '/story/' + id;
+  var url = req.get('host') + '/story/' + req.params.id;
 
   res.render('save-story', {
     url: url,
@@ -105,13 +151,14 @@ exports.saveStoryPage = function (req, res, next) {
 
 exports.storyPage = function (req, res, next) {
   var id = req.params.id;
-  var story = stories.filter(function (story) {
+  var story = database.filter(function (story) {
     if (story.id == id) {
       return story;
     }
   });
 
   res.render('story', {
-    dataFirstQuery: story[0]
+    dataFirstQuery: story[0].years,
+    id: id
   });
 }
