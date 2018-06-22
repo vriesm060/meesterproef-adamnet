@@ -1,7 +1,57 @@
 <%- include('partials/head.ejs') %>
-	<body class="story">
+	<body class="my-story">
 
-	<a class="edit-story-btn" href="/create-story/<%- id %>" role="button">Selecteer andere foto's</a>
+		<% var years = Object.keys(selection); %>
+		<nav class="register">
+			<ol>
+				<% years.forEach(function (year) { %>
+					<% var chapters = Object.keys(selection[year]); %>
+					<li>
+						<a href="#<%- year %>-<%- chapters[0].replace(/\s/g,'').toLowerCase() %>"><%= year %></a>
+						<ul>
+							<% chapters.forEach(function (chapter) { %>
+								<% if (chapter != 'Jouw buurt') { %>
+									<% chapter = 'Jouw straat'; %>
+								<% } %>
+								<li><a href="#<%- year %>-<%- chapter.replace(/\s/g,'').toLowerCase() %>"><%= chapter %></a></li>
+							<% }); %>
+							<li><button type="button">+</button></li>
+						</ul>
+					</li>
+				<% }); %>
+			</ol>
+		</nav>
+
+		<main class="content">
+			<% years.forEach(function (year) { %>
+				<% var chapters = Object.keys(selection[year]); %>
+				<% chapters.forEach(function (chapter) { %>
+					<% if (chapter != 'Jouw buurt') { %>
+						<% var streetName = chapter; %>
+						<% chapter = 'Jouw straat'; %>
+					<% } %>
+					<%- include('partials/chapter.ejs', {
+						selection: selection,
+						year: year,
+						chapter: chapter,
+						streetName: streetName
+					}) %>
+				<% }); %>
+			<% }); %>
+		</main>
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- <a class="edit-story-btn" href="/create-story/<%- id %>" role="button">Selecteer andere foto's</a>
 	<% var text; %>
 	<% var url; %>
 	<% if (edit == true) { %>
@@ -11,9 +61,9 @@
 		<% text = 'Verhaal bewerken'; %>
 		<% url = '/edit-story/'; %>
 	<% } %>
-	<a class="save-story-btn" href="<%- url %><%- id %>" role="button"><%= text %></a>
+	<a class="save-story-btn" href="<%- url %><%- id %>" role="button"><%= text %></a> -->
 
-	<% for(var i = 0; i < Object.keys(selection).length; i++) { %>
+	<!-- <% for(var i = 0; i < Object.keys(selection).length; i++) { %>
 		<section class="year">
 			<h1><%- Object.keys(selection)[i] %></h1>
 			<% var objectYears = selection[Object.keys(selection)[i]]; %>
@@ -37,11 +87,6 @@
 				</section>
 			<% } %>
 		</section>
-	<% } %>
-
-	<script>
-		window.data = <%- JSON.stringify(selection || null) %>;
-		console.log(window.data);
-	</script>
+	<% } %> -->
 
 <%- include('partials/foot.ejs') %>
