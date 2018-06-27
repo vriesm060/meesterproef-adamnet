@@ -791,8 +791,6 @@ p, a, li {
 	-webkit-columns: 25vw 1;
 	-moz-columns: 25vw 1;
 	columns: 25vw 1;
-	column-fill: auto;
-	column-fill: balance;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -807,7 +805,6 @@ p, a, li {
 		-webkit-columns: 20vw 3;
 		-moz-columns: 20vw 3;
 		columns: 20vw 3;
-		column-fill: auto;
 	}
 }
 
@@ -1358,7 +1355,6 @@ p, a, li {
 /* images grid */
 .my-story main ul {
 	columns: 25vw 1;
-	column-fill: balance;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -1369,7 +1365,6 @@ p, a, li {
 		-webkit-columns: 20vw 3;
 		-moz-columns: 20vw 3;
 		columns: 20vw 3;
-		column-fill: auto;
 	}
 }
 
