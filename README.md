@@ -75,7 +75,7 @@ We have used the following frameworks and packages:
 **My memories book:**
 * Give your book a title
 * Browse between the selected pictures, ordered by year
-* Browse between different chapters of your book, like 'Your street' or 'Your neighbourhood'.
+* Browse between different chapters of your book, like 'Your street' or 'Your neighborhood'.
 * Add new chapters from a selection of chapters
 * Add or edit descriptions of your choice to the pictures.
 
@@ -225,5 +225,100 @@ In the chapter you have to fill in a input field, which will search (coming soon
 * Changing the leaflet map to a better version
 
 ## Collaborators
+[Max de Vries](https://github.com/vriesm060) and [Suus ten Voorde](https://github.com/s44s) are the collaborators of this project.
 
-//Us
+If you want to know more about our process and testresults, check [this link](https://docs.google.com/document/d/13ffiy7-qafjm6pxHgUFO63iCZuLWXJ1KEM_uCn8LiBM/edit).
+
+### Suus
+Een van mijn leerdoelen van dit project was om GEEN spaghetti code meer te schrijven. Tijdens deze minor heb ik ontzettend veel geleerd, voornamelijk over Javascript. Misschien zelfs zoveel dat ik dit niet altijd goed in mij heb kunnen opnemen. Deze meesterproef wilde ik meer begrijpen wat ik nou precies aan code heb geschreven en wat het precies betekent. Daarnaast heb ik gemerkt dat het concepten wel goed gaat, alleen de uitwerking daarvan vaak te kort doet hieraan. Hierdoor komt het concept niet altijd even goed over zoals ik had gehoopt, terwijl ik dit verbaal wel goed kan uitwerken. Het tweede leerdoel van de meesterproef is daarom ook om het prototype voor zichzelf te laten spreken, het concept moet goed naar voren komen. Om dit goed over te laten komen, moet de flow juist in elkaar zitten en moet er op interactie gebied met wat meer liefde hiernaar worden gekeken.
+
+Tijdens de eerste week van de meesterproef had ik besloten om met Max samen te werken. Dit is één van de beste keuzes die ik heb gemaakt. Door mijn eigenwijsheid vind ik samenwerken soms best lastig, maar naar mijn idee ging deze samenwerking heel fijn. Max gaf goed aan wat hij de beste manier vond om iets te oplossen en ik die van mij. Wanneer we het ergens niet over eens waren, dan kwamen we altijd op een middenweg uit.
+
+Mijn eerste leerdoel was geen spaghetti code meer te schrijven. Dat dit gelukt is heb ik grotendeels te danken aan onze samenwerking. Doordat we duidelijke afspraken hadden gemaakt hoe we met GIT om gingen, moesten we elkaar telkens reviewen voor de branch gemerged kon worden. Dit zorgde ervoor dat Max feedback op mijn code gaf en ik op die van hem. Hier heb ik heel veel van geleerd. Het waren vaak kleine tips, maar die zorgde wel voor veel verbetering.
+
+Dit is een voorbeeld van z'n feedback moment. Max gaf aan dat de naamgeving hier niet duidelijk genoeg was.
+
+```javascript
+var fetch = require('node-fetch');
+var sparqlqueries = require('./sparql');
+
+exports.location = async function (newStoryData) {
+  // Fetch the images for selected location and timestamp:
+  var url = sparqlqueries.url(sparqlqueries.getLocationAndTimestamp(newStoryData));
+
+return await fetch(url)
+	  .then((resp) => resp.json()) // transform the data into json
+    .then(function (data) {
+
+			var dataFilter = data.results.bindings;
+
+			var all = {
+				years: {}
+			};
+
+			dataFilter.forEach(function(item, i, self) {
+		  	var year = item.start.value.split('-')[0];
+				var chapter;
+
+				if (item.street.value == dataFilter[0].street.value) {
+					chapter = dataFilter[0].streetLabel.value;
+				} else {
+					chapter = 'de overige straten';
+				}
+
+		    if (!all.years[year]) {
+		    	all.years[year] = {};
+		    }
+				if (!all.years[year][chapter]) {
+					all.years[year][chapter] = [];
+				}
+
+				all.years[year][chapter].push(item);
+			});
+
+			return all;
+
+    }).catch(function (error) {
+      console.log(error);
+    });
+};
+```
+
+Als laatste doel wilde ik de flow duidelijk maken van de applicatie zodat ons concept goed naar voren kwam. De twee testmomenten die we gehad hebben, heeft hierbij heel erg geholpen. Vorige week vrijdag kwamen we tot de conclusie dat onze huidige flow niet logisch genoeg was. We hebben er daarom voor gekozen om dit op het laatste moment nog aan te passen. Dit heeft even voor wat hoofdpijn en stress momenten gezorgd, maar is naar mijn mening een hele belangrijke stap geweest. Overall ben ik erg tevreden met wat we hebben neergezet en ik denk dat het concept goed naar voren komt.
+
+
+*Web App from Scratch:* Een belangrijk punt wat we hebben meegenomen van WAFS is de indeling van de applicatie. We hebben allereerst goed gekeken hoe we de app gingen opbouwen voordat we als een kip zonder kop begonnen met coderen. Zo hebben we een aparte routes map met alle routes daarin gedefineerd en in de controllers map staan de sparql queries, de data filters en de data die we meesturen aan de routes. Hierdoor houden we overzicht. Daarnaast hebben we meerdere data methodes toegepast, onder andere de filter() en map() functie. Een request maken naar de api met een fetch hebben we ook mee kunnen nemen vanuit WAFS en project1.
+
+*CSS to the Rescue:* Dit vak heb ik voornamelijk kunnen toepassen. We hebben  niet al te veel met CSS selectors gewerkt (sorry Vasilis), maar voornamelijk met classes. Uit CSS hebben we nieuwe features gebruikt als Column-layout, Grid en CSS properties. We hebben geprobeerd te letten op focus states, maar hier lag niet onze prioriteit. Een handig trucje wat ik uit CSSTR heb meegenomen is de volgende:
+
+```CSS
+.my-story h2 {
+	height: min-content;
+}
+```
+
+*Performance Matters: *
+We hebben geprobeerd om dit vak zo goed mogelijk toe te passen, omdat het voor onze site best een issue zou kunnen worden met het aantal data dat er beschikbaar is. Dit hebben we gedaan door bijvoorbeeld in modules te werken en het asynch inladen van een .json file van de straten.
+
+*Browser Tech: * In dit vak heb ik heel veel geleerd over hoe browsers dingen verschillend implenteren. Bij het maken van een CSS keuze (bv: gaan we grid of flex gebruiken), neem ik de browser-ondersteuning ook mee in mijn overweging. Verder heeft Max een fallback geschreven voor wanneer Javascript uitstaat.
+
+*Web design:* Het belangrijkste wat we van Web Design hebben toegepast is de flow van onze website. We hadden een prachtig concept bedacht, wat veel uitdagingen had op het gebied van design en interactie. Door het meerdere keren te testen met de 'echte' doelgroep hebben we hier meerdere iteraties op kunnen maken die ook zeker voor veel veranderingen hebben gezorgd. In mijn procesboek zijn deze veranderingen duidelijk te vinden. Ook via [deze link](https://docs.google.com/document/d/13ffiy7-qafjm6pxHgUFO63iCZuLWXJ1KEM_uCn8LiBM/edit). is er meer te lezen waarom we bepaalde aanpassingen hebben gedaan. Om ze nog wat beter toe te lichten hier ook een aantal screenshots van de iteraties:
+
+Iteratie 1:
+<img src="screenshots/3.png">
+<img src="screenshots/1.png">
+<img src="screenshots/2.png">
+
+Iteratie 2:
+<img src="screenshots/5.png">
+
+<img src="screenshots/6.png">
+
+<img src="screenshots/4.png">
+
+<img src="screenshots/7.png">
+
+Iteratie 3: check onze live website voor de nieuwe iteratie [een stukje nostalgie](http://eenstukjenostalgie.amsterdam/)
+
+
+<img src="screenshots/crosses.svg">
