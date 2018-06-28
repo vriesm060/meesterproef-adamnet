@@ -330,9 +330,9 @@ var fetchStreetWkts = async function () {
 
 **Pull requests waarin WAFS terug komt:**
 
-* [Feature/data-routes]()
-* [Feature/first-data-filter]()
-* [Feature/data-flow-update]()
+* [Feature/data-routes](https://github.com/s44s/meesterproef-adamnet/pull/20)
+* [Feature/first-data-filter](https://github.com/s44s/meesterproef-adamnet/pull/48)
+* [Feature/data-flow-update](https://github.com/s44s/meesterproef-adamnet/pull/82)
 
 ### CSS to the Rescue
 ---
@@ -361,7 +361,7 @@ Dit heb ik op de volgende manier gedaan:
 
 **Pull requests waarin CSS to the Rescue terug komt:**
 
-* [Feature/change-new-story-layout]()
+* [Feature/change-new-story-layout](https://github.com/s44s/meesterproef-adamnet/pull/115)
 
 ### Performance Matters
 ---
@@ -386,8 +386,8 @@ getAllStreets: async function () {
 
 **Pull requests waarin Performance Matters terug komt:**
 
-* [Feature/data-routes]()
-* [Feature/fallback-for-selecting-location]()
+* [Feature/data-routes](https://github.com/s44s/meesterproef-adamnet/pull/20)
+* [Feature/fallback-for-selecting-location](https://github.com/s44s/meesterproef-adamnet/pull/72)
 
 ### Browser Technologies
 ---
@@ -421,7 +421,7 @@ En zo in gebruik:
 
 **Pull requests waarin Browser Technologies terug komt:**
 
-* [Feature/fallback-for-selecting-location]()
+* [Feature/fallback-for-selecting-location](https://github.com/s44s/meesterproef-adamnet/pull/72)
 
 ### Web Design
 ---
