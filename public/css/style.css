@@ -17,17 +17,20 @@
     /* Heading font: */
     --heading-fz: 2em;
     --heading-fw: 700;
-    --heading-lh: 1;
+    --heading-lh: 1.2;
 
     /* Subheading font: */
     --subheading-fz: 1.5em;
     --subheading-fw: 400;
-    --subheading-lh: 1;
+    --subheading-lh: 1.2;
 
     /* Form elements font: */
     --form-fz: 1em;
     --form-fw: 700;
     --form-lh: 1;
+
+  /* Spacing: */
+  --main-spacing: 1.5rem;
 }
 
 /*
@@ -36,7 +39,7 @@
 ====================
 */
 
-html {
+* {
   box-sizing: border-box;
 	margin: 0;
 	padding: 0;
@@ -44,11 +47,62 @@ html {
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
-	/* font-family: helvetica, sans-serif; */
 }
 
-p, a, li {
-	font-size: 0.9em;
+body {
+  color: var(--main-black);
+  font-family: var(--font-family);
+  font-size: var(--base-fz);
+  font-weight: var(--base-fw);
+  line-height: var(--base-lh);
+}
+
+h1 {
+  font-size: var(--heading-fz);
+  font-weight: var(--heading-fw);
+  line-height: var(--heading-lh);
+}
+
+h2 {
+  font-size: var(--subheading-fz);
+  font-weight: var(--subheading-fw);
+  line-height: var(--subheading-lh);
+}
+
+button,
+input,
+select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3.125rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: .625rem;
+  color: var(--main-white);
+  background-color: var(--main-black);
+  font-size: var(--form-fz);
+  font-weight: var(--form-fw);
+  line-height: var(--form-lh);
+}
+button:focus,
+button:hover,
+select:focus,
+select:hover {
+  background-color: var(--main-red);
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+button.action-btn {
+  background-color: var(--main-red);
+}
+button.action-btn:focus,
+button.action-btn:hover {
+  background-color: var(--main-black);
 }
 
 /*
@@ -333,7 +387,12 @@ p, a, li {
   background-color: #000;
 }
 
-/* NEW-STORY */
+/*
+====================
+  New Story
+====================
+*/
+
 /* leaflet map */
 .new-story #map {
 	position: absolute;
@@ -400,41 +459,42 @@ p, a, li {
 	left: 5%;
   display: block;
 	height: 92vh;
-	width: 1.5rem;
-  border-radius: 1rem;
+	width: var(--main-spacing);
+  border-radius: var(--main-spacing);
 }
 
 .noUi-background {
-	background: black;
+	background: var(--main-black);
 }
 
 .noUi-vertical {
-	width: 2em;
+	width: 2rem;
 }
 
-.noUi-base, .noUi-handle {
+.noUi-base,
+.noUi-handle {
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
 }
 
 .noUi-base {
-  width: 100%;
-  height: 100%;
   position: relative;
   z-index: 1;
+  width: 100%;
+  height: 100%;
 }
 
 .noUi-connect {
-	background: var(--main-red);
+	background-color: var(--main-red);
 }
 
 .noUi-origin {
   position: absolute;
+  left: 0;
   right: 0;
   top: 0;
-  left: 0;
   bottom: 0;
-  border-radius: 1em;
+  border-radius: var(--main-spacing);
 }
 
 .animate {
@@ -443,48 +503,51 @@ p, a, li {
 
 .noUi-vertical .noUi-handle {
 	position: relative;
+  left: -1rem;
+  top: -2rem;
 	z-index: 1;
-  width: 3.5em;
-  height: 3.5em;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: .3rem solid var(--main-red);
 	border-radius: 50%;
-	border: 0.3em solid var(--main-red);
-	box-sizing: border-box;
-	left: -1em;
-  top: -2em;
-	background: #FFF;
+	background-color: var(--main-white);
 	cursor: ns-resize;
 }
 
 .noUi-tooltip {
 	position: absolute;
-	height: 1em;
-  top: .9em;
-	left: 0.3em;
-	font-weight: bold;
+  left: .3rem;
+  top: .9rem;
+	height: 1rem;
+	font-weight: var(--form-fw);
 }
 
-/* outputs */
+/* Outputs */
+.new-story .timestamp-min-static,
+.new-story .timestamp-max-static {
+  position: absolute;
+  left: 4.5rem;
+  z-index: 0;
+  display: none;
+  font-size: var(--subheading-fz);
+}
+@media all and (min-width: 50em) {
+  .new-story .timestamp-min-static,
+  .new-story .timestamp-max-static {
+    display: block;
+  }
+}
+
 .new-story .timestamp-min-static {
-	display: none;
-	position: absolute;
-	top: 4vh;
-	left: 4.5rem;
-	z-index: 0;
-	color: black;
-	font-size: 1.5em;
+  top: 4vh;
 }
 
 .new-story .timestamp-max-static {
-	display: none;
-	position: absolute;
-	bottom: 4vh;
-	left: 4.5rem;
-	z-index: 0;
-	color: black;
-	font-size: 1.5em;
+  bottom: 4vh;
 }
 
-#rangevalueMin, #rangevalueMax {
+#rangevalueMin,
+#rangevalueMax {
 	display: none;
 }
 
@@ -514,20 +577,17 @@ p, a, li {
 
 /* Searchbar */
 .new-story .search-location input {
-  box-sizing: border-box;
 	display: inline-block;
 	width: calc(100% - 6.5rem);
   max-width: 20rem;
-	height: 3.125rem;
-	padding: 0;
-	padding-left: 1rem;
-  margin: 1.5rem 0;
-	border: 3px solid black;
-	color: black;
-	font-size: 1em;
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
+  margin: var(--main-spacing) 0;
+	border: .1875rem solid var(--main-black);
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
   outline: 0;
+  color: var(--main-black);
+  background-color: var(--main-white);
+  font-weight: var(--base-fw);
 }
 .new-story .search-location input:focus {
   border-color: var(--main-red);
@@ -535,29 +595,22 @@ p, a, li {
 
 .new-story .search-location button {
 	display: inline-block;
-	height: 3.125rem;
 	width: 5rem;
-	padding: 0;
-	border: 3px solid black;
-	background-color: black;
-	color: white;
-	font-size: 1em;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	margin-left: -4px;
+	border: .1875rem solid var(--main-black);
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	margin-left: -.25rem;
   cursor: pointer;
 }
 .new-story .search-location button:focus,
-.new-story .search-location button:hover,
-.new-story .search-location button:active {
-  background-color: var(--main-red);
+.new-story .search-location button:hover {
   border-color: var(--main-red);
 }
 
 /* Autocomplete */
 .new-story .autocomplete {
   display: block;
-  width: calc(100% - 1.5rem);
+  width: calc(100% - var(--main-spacing));
 }
 
 .new-story .autocomplete ul {
@@ -573,9 +626,8 @@ p, a, li {
 .new-story .autocomplete li a {
   display: block;
   padding: 1rem;
-  border-bottom: 3px solid #000;
-  color: #000;
-  font-size: 1rem;
+  border-bottom: .1875rem solid var(--main-black);
+  color: var(--main-black);
   text-decoration: none;
 }
 .new-story .autocomplete li a:focus,
@@ -588,15 +640,15 @@ p, a, li {
 
 /* Radius select */
 .new-story .radiusSelect {
-	display: block;
-	width: calc(100% - 1.5rem);
+	/* display: block; */
+  overflow: hidden;
+	width: calc(100% - var(--main-spacing));
   max-width: 25rem;
-	margin-bottom: 5%;
+  border-radius: .625rem;
+  margin-bottom: 5%;
 	background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 95% 0;
   background-size: auto 100%;
-	background-color: black;
-	overflow: hidden;
-	border-radius: 10px;
+	background-color: var(--main-black);
 }
 .new-story .radiusSelect:focus,
 .new-story .radiusSelect:hover,
@@ -605,36 +657,19 @@ p, a, li {
 }
 
 .new-story .radiusSelect select {
-  color: #fff;
-	background: transparent;
+  width: 100%;
 	border: none;
-	font-size: 1em;
-	height: 3.125rem;
-  margin-left: 1rem;
-	width: calc(200px + 70%);
-  cursor: pointer;
+  background-color: transparent;
+  font-weight: var(--base-fw);
 }
 
-/* submit button */
+/* Submit button */
 .new-story form.submit-location-and-timestamp button {
 	position: absolute;
+  right: 3.5rem;
 	bottom: 3.5vh;
-	right: 3.5rem;
 	width: calc(95% - 7.5rem);
   max-width: 15rem;
-	height: 3.125rem;
-	border: none;
-	color: white;
-	background-color: var(--main-red);
-	font-weight: bold;
-	font-size: 1em;
-	border-radius: 10px;
-  cursor: pointer;
-}
-.new-story form.submit-location-and-timestamp button:focus,
-.new-story form.submit-location-and-timestamp button:hover,
-.new-story form.submit-location-and-timestamp button:active {
-  background-color: #000;
 }
 @media all and (min-width: 50em) {
   .new-story form.submit-location-and-timestamp button {
@@ -643,30 +678,22 @@ p, a, li {
 }
 
 .new-story form.submit-location-and-timestamp button::after {
-	background-image: url('/images/chevron-sign-to-right.svg');
-	background-size: 15px 15px;
 	display: inline-block;
-	width: 15px;
-	height: 15px;
-	content:"";
+	width: 1rem;
+	height: 1rem;
 	margin-left: 5%;
+  background-image: url('/images/chevron-sign-to-right.svg');
+	background-size: 1rem 1rem;
+  content: '';
 }
 
+/*
+====================
+  Create Story
+====================
+*/
 
-@media only screen and (min-width: 50em) {
-	.new-story form.location-and-timestamp button {
-		right: 10%;
-		width: 20%;
-		bottom: 10%;
-	}
-
-	.new-story .timestamp-max-static, .new-story .timestamp-min-static {
-		display: block;
-	}
-}
-
-/* CREATE-STORY */
-/* form */
+/* Form */
 .create-story {
 	padding: 0;
 	margin: 0;
