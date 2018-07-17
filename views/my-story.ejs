@@ -1,158 +1,160 @@
 <%- include('partials/head.ejs') %>
-	<body class="my-story">
+<body class="my-story">
 
-		<% var years = Object.keys(selection); %>
+	<% var years = Object.keys(selection); %>
 
-		<nav class="register">
-			<a href="/new-story"><img src="/images/home.svg"/></a>
-			<ol class="register-years"><%
-				years.forEach(function (year) { %>
-					<li>
-						<a href="#<%- year %>"><%= year %></a>
-					</li><%
-				}); %>
-			</ol>
-		</nav>
-
-		<main class="content">
-			<button id="help">?</button>
-
-			<div id="tell-me-more" class="modal">
-			  <div class="modal-content">
-			    <span class="close">&times;</span>
-			    <p>
-						Dit is jouw gemaakte herinneringenboek.
-						Op deze pagina kun je de geselecteerde foto's bekijken per jaar en onder elke foto is er de mogelijkheid om tekst aan te passen of toe te voegen.
-					</p>
-			  </div>
-			</div>
-
-			<section class="personal-data">
-				<h1>Jouw herinneringenboek</h1>
-			</section><%
+	<nav class="register">
+		<a href="/new-story">
+			<img src="/images/home.svg">
+		</a>
+		<ol class="register-years"><%
 			years.forEach(function (year) { %>
-				<div class="year year-<%- year %>">
-					<%- include('partials/chapter.ejs', {
-						selection: selection,
-						year: year
-					}); %>
-				</div><%
+				<li>
+					<a href="#<%- year %>"><%= year %></a>
+				</li><%
 			}); %>
-		</main>
+		</ol>
+	</nav>
 
-		<script>
-			// Get the modal
-			var modal = document.getElementById('tell-me-more');
+	<main class="content">
+		<button id="help">?</button>
 
-			// Get the button that opens the modal
-			var btn = document.getElementById("help");
+		<div id="tell-me-more" class="modal">
+		  <div class="modal-content">
+		    <span class="close">&times;</span>
+		    <p>
+					Dit is jouw gemaakte herinneringenboek.
+					Op deze pagina kun je de geselecteerde foto's bekijken per jaar en onder elke foto is er de mogelijkheid om tekst aan te passen of toe te voegen.
+				</p>
+		  </div>
+		</div>
 
-			// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("close")[0];
+		<section class="personal-data">
+			<h1>Jouw herinneringenboek</h1>
+		</section><%
+		years.forEach(function (year) { %>
+			<div class="year year-<%- year %>">
+				<%- include('partials/chapter.ejs', {
+					selection: selection,
+					year: year
+				}); %>
+			</div><%
+		}); %>
+	</main>
 
-			// When the user clicks the button, open the modal
-			btn.onclick = function() {
-				modal.style.display = "block";
-			}
+	<script>
+		// Get the modal
+		var modal = document.getElementById('tell-me-more');
 
-			// When the user clicks on <span> (x), close the modal
-			span.onclick = function() {
-			  modal.style.display = "none";
-			}
+		// Get the button that opens the modal
+		var btn = document.getElementById("help");
 
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-			  if (event.target == modal) {
-			    modal.style.display = "none";
-			  }
-			}
-		</script>
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
 
-		<script>
-			//open detail page image
-			var trigger = document.querySelectorAll('.openDetail');
-			var detailpopup = document.querySelectorAll('.detail');
-			var closeButton = document.querySelectorAll('.popupCloseButton');
+		// When the user clicks the button, open the modal
+		btn.onclick = function() {
+			modal.style.display = "block";
+		}
 
-			for(var i = 0; i < trigger.length; i++) {
-				trigger[i].addEventListener('click', function(e){
-					e.preventDefault();
-					e.path[3].childNodes[3].classList.add('show');
-				});
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		  modal.style.display = "none";
+		}
 
-				detailpopup[i].addEventListener('click', function(e){
-					e.preventDefault();
-					e.target.parentElement.classList.remove('show')
-				});
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		  if (event.target == modal) {
+		    modal.style.display = "none";
+		  }
+		}
+	</script>
 
-				closeButton[i].addEventListener('click', function(e){
-					e.preventDefault();
-					e.target.parentElement.parentElement.classList.remove('show')
-				});
-			}
-		</script>
+	<script>
+		//open detail page image
+		// var trigger = document.querySelectorAll('.openDetail');
+		// var detailpopup = document.querySelectorAll('.detail');
+		// var closeButton = document.querySelectorAll('.popupCloseButton');
+		//
+		// for(var i = 0; i < trigger.length; i++) {
+		// 	trigger[i].addEventListener('click', function(e){
+		// 		e.preventDefault();
+		// 		e.path[3].childNodes[3].classList.add('show');
+		// 	});
+		//
+		// 	detailpopup[i].addEventListener('click', function(e){
+		// 		e.preventDefault();
+		// 		e.target.parentElement.classList.remove('show')
+		// 	});
+		//
+		// 	closeButton[i].addEventListener('click', function(e){
+		// 		e.preventDefault();
+		// 		e.target.parentElement.parentElement.classList.remove('show')
+		// 	});
+		// }
+	</script>
 
-		<script>
-			//active menu li item on scroll
-			var yearSections = document.querySelectorAll('main .year');
-			var yearsTitle = document.querySelectorAll('.register-years > li');
-			var links = document.querySelectorAll('.register-years > li > a');
+	<script>
+		//active menu li item on scroll
+		var yearSections = document.querySelectorAll('main .year');
+		var yearsTitle = document.querySelectorAll('.register-years > li');
+		var links = document.querySelectorAll('.register-years > li > a');
 
-			//menu equal li items
-			function navWidth() {
-				var countYears = yearsTitle.length;
+		//menu equal li items
+		function navWidth() {
+			var countYears = yearsTitle.length;
 
-				yearsTitle.forEach(function (year) {
-					year.style.height = 'calc((100% - 5rem) / ' + countYears + ')';
-				});
-			}
-			navWidth();
-
-			links.forEach(function (link, i, self) {
-				link.addEventListener('click', function () {
-					var current = document.querySelector('.register-chapters.show-chapter');
-					current.classList.remove('show-chapter');
-					this.nextElementSibling.classList.add('show-chapter');
-				});
+			yearsTitle.forEach(function (year) {
+				year.style.height = 'calc((100% - 5rem) / ' + countYears + ')';
 			});
+		}
+		navWidth();
+
+		links.forEach(function (link, i, self) {
+			link.addEventListener('click', function () {
+				var current = document.querySelector('.register-chapters.show-chapter');
+				current.classList.remove('show-chapter');
+				this.nextElementSibling.classList.add('show-chapter');
+			});
+		});
 
 
-			function onScroll(){
-				var sections = document.querySelectorAll('article.chapter');
-				var chaptersTitle = document.querySelectorAll('.register-chapters > .chapter-name');
+		function onScroll(){
+			var sections = document.querySelectorAll('article.chapter');
+			var chaptersTitle = document.querySelectorAll('.register-chapters > .chapter-name');
 
-				window.addEventListener('scroll', function(){
-					for (var i = 0; i < yearSections.length; i++) {
-						var showChapter = document.querySelector('.show-chapter');
-						if(showChapter == null){
-							yearsTitle[0].children[1].classList.add('show-chapter');
-						}
-						if(yearSections[i].offsetTop-5 <= window.scrollY && (yearSections[i].offsetHeight + yearSections[i].offsetTop) > window.scrollY+5) {
-							yearsTitle[i].classList.add('active-menu');
-							yearsTitle[i].children[1].classList.add('show-chapter');
-						} else {
-							yearsTitle[i].classList.remove('active-menu');
-							yearsTitle[i].children[1].classList.remove('show-chapter');
-						}
+			window.addEventListener('scroll', function(){
+				for (var i = 0; i < yearSections.length; i++) {
+					var showChapter = document.querySelector('.show-chapter');
+					if(showChapter == null){
+						yearsTitle[0].children[1].classList.add('show-chapter');
 					}
-
-
-					for (var i = 0; i < sections.length; i++) {
-						if(sections[i].offsetTop-5 <= window.scrollY && (sections[i].offsetHeight + sections[i].offsetTop) > window.scrollY+5) {
-							chaptersTitle[i].classList.add('active-menu');
-						} else {
-							chaptersTitle[i].classList.remove('active-menu');
-						}
+					if(yearSections[i].offsetTop-5 <= window.scrollY && (yearSections[i].offsetHeight + yearSections[i].offsetTop) > window.scrollY+5) {
+						yearsTitle[i].classList.add('active-menu');
+						yearsTitle[i].children[1].classList.add('show-chapter');
+					} else {
+						yearsTitle[i].classList.remove('active-menu');
+						yearsTitle[i].children[1].classList.remove('show-chapter');
 					}
-				});
-			}
-			onScroll();
-		</script>
+				}
 
-		<script>
-			var form = document.querySelector('.personal-data form');
-			form.addEventListener('submit', function(e){
-				e.preventDefault();
-			})
-		</script>
+
+				for (var i = 0; i < sections.length; i++) {
+					if(sections[i].offsetTop-5 <= window.scrollY && (sections[i].offsetHeight + sections[i].offsetTop) > window.scrollY+5) {
+						chaptersTitle[i].classList.add('active-menu');
+					} else {
+						chaptersTitle[i].classList.remove('active-menu');
+					}
+				}
+			});
+		}
+		onScroll();
+	</script>
+
+	<script>
+		var form = document.querySelector('.personal-data form');
+		form.addEventListener('submit', function(e){
+			e.preventDefault();
+		})
+	</script>
 <%- include('partials/foot.ejs') %>
