@@ -19,17 +19,17 @@
 					<button type="submit">Zoek</button>
 				</form>
 
-				<div class="autocomplete">
-					<% if (data !== null && data !== undefined) { %>
-						<ul id="autocomplete-list" class="autocomplete-items">
-							<% data.forEach(function (street) { %>
+				<div class="autocomplete"><%
+					if (data !== null && data !== undefined) { %>
+						<ul id="autocomplete-list" class="autocomplete-items"><%
+							data.forEach(function (street) { %>
 								<li>
 									<input id="<%- street.street.value %>" type="radio" name="wkt" value="<%- street.wkt.value %>">
 									<label for="<%- street.street.value %>"><%= street.name.value %></label>
-								</li>
-							<% }); %>
-						</ul>
-					<% } %>
+								</li><%
+							}); %>
+						</ul><%
+					} %>
 				</div>
 
 				<div class="radiusSelect">
