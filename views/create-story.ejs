@@ -70,7 +70,7 @@
 													<p>
 														<%= Object.values(objectChaptersSelection)[k].title.value %>
 													</p>
-													<a class="openDetail" href="">
+													<a class="openDetail" data-image="<%- Object.values(objectChaptersSelection)[k].img.value %>" data-text="<%- Object.values(objectChaptersSelection)[k].title.value %>" href="">
 														<img src="/images/zoom-in.svg" alt="zoom-in icon">
 													</a>
 												</div>
@@ -94,7 +94,7 @@
 													<p>
 														<%= Object.values(objectChapters)[k].title.value %>
 													</p>
-													<a class="openDetail" href="">
+													<a class="openDetail" data-image="<%- Object.values(objectChapters)[k].img.value %>" data-text="<%- Object.values(objectChapters)[k].title.value %>" href="">
 														<img src="/images/zoom-in.svg" alt="zoom-in icon">
 													</a>
 												</div>
