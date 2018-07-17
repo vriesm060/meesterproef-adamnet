@@ -717,7 +717,7 @@ button.action-btn:hover {
 		top: 0;
     z-index: 1;
 		display: block;
-		width: 30vw;
+		width: 4.5rem;
 	}
 }
 
@@ -764,14 +764,11 @@ button.action-btn:hover {
 }
 @media all and (min-width: 50em) {
   .create-story .table-of-contents {
-    position: fixed;
-		left: 5vw;
-    z-index: 100;
-    overflow: scroll;
+		left: 4.5rem;
+    z-index: 10;
+    /* overflow: scroll; */
 		width: 15vw;
 		height: 100%;
-		padding-top: 5vh;
-		/* background-color: rgba(255,255,255,0.8); */
 	}
 }
 
@@ -790,7 +787,7 @@ button.action-btn:hover {
 }
 @media all and (min-width: 50em) {
   .create-story .table-of-contents button {
-		background-color: rgba(255,255,255,.8);
+		display: none;
 	}
   .create-story .table-of-contents .open,
   .create-story .table-of-contents .close {
@@ -810,10 +807,9 @@ button.action-btn:hover {
   margin: 12.5%;
 }
 
-
 .create-story .table-of-contents ol {
   display: block;
-  overflow: hidden;
+  overflow: scroll;
   height: calc(100vh - 4rem);
   background-color: var(--main-red);
   list-style: none;
@@ -823,19 +819,20 @@ button.action-btn:hover {
 }
 .create-story .table-of-contents .first,
 .create-story .table-of-contents .close-menu {
-	/* max-height: 0; */
   transform: translateX(-4rem);
 }
 .create-story .table-of-contents .open-menu {
-	/* max-height: none; */
   transform: translateX(0);
 }
 @media all and (min-width: 50em) {
   .create-story .table-of-contents ol {
+    height: 100vh;
+    padding-top: 5vh;
     background-color: rgba(255,255,255,0.8);
+    transform: translateX(0);
   }
   .create-story .table-of-contents .first {
-    max-height: none;
+    transform: translateX(0);
   }
 	.create-story .table-of-contents ol::after {
     position: absolute;
@@ -899,7 +896,6 @@ button.action-btn:hover {
   }
 }
 
-
 /* Contents */
 .create-story .contents {
   position: relative;
@@ -909,7 +905,9 @@ button.action-btn:hover {
 }
 @media all and (min-width: 50em) {
   .create-story .contents {
-    width: 100%;
+    left: calc(15vw + 4.5rem);
+    top: 0;
+    width: calc(100% - 15vw - 4.5rem);
   }
 }
 
