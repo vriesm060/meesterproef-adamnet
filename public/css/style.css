@@ -1120,20 +1120,20 @@ button.action-btn:hover {
 }
 
 .my-story nav > a {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
 	display: block;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 	width: 5rem;
 	height: 5rem;
-  padding: 1.5rem;
-	position: fixed;
-	z-index: 1000;
-	top: 0;
-	left: 0;
+  padding: var(--main-spacing);
 }
 .my-story nav > a:focus,
 .my-story nav > a:hover,
 .my-story nav > a:active {
-  background-color: #000;
+  background-color: var(--main-black);
 }
 
 .my-story nav > a img {
@@ -1150,8 +1150,8 @@ button.action-btn:hover {
   width: 5rem;
   height: 100vh;
 	padding: 0;
+  padding-top: 5rem;
 	margin: 0;
-	padding-top: 5rem;
   background-color: var(--main-red);
 }
 
@@ -1160,12 +1160,10 @@ button.action-btn:hover {
   width: 5rem;
 }
 
-.my-story nav .register-years > li:hover {
-	background-color: rgba(255,255,255,0.5);
-}
-
+.my-story nav .register-years > li:focus,
+.my-story nav .register-years > li:hover,
 .my-story nav .register-years > li.active-menu {
-	background-color: rgba(255,255,255,0.5);
+	background-color: var(--main-black);
 }
 
 .my-story nav .register-years li > a {
@@ -1175,13 +1173,13 @@ button.action-btn:hover {
   width: 100%;
   height: 100%;
   padding: 0 .5rem;
-  color: white;
+  color: var(--main-white);
   font-size: 1.25rem;
   text-decoration: none;
-	padding: 0;
 }
 
-.my-story nav .register-chapters li > a, .my-story nav .register-chapters li > button {
+.my-story nav .register-chapters li > a,
+.my-story nav .register-chapters li > button {
 	justify-content: flex-start;
 	margin-left: 2rem;
 }
@@ -1190,6 +1188,7 @@ button.action-btn:hover {
   position: fixed;
   left: 5rem;
   top: 0;
+  z-index: 100;
   display: none;
   flex-wrap: nowrap;
   width: calc(100% - 5rem);
@@ -1197,12 +1196,11 @@ button.action-btn:hover {
   padding: 0;
   margin: 0;
   background-color: var(--main-red);
-	z-index: 100;
 }
 
 .my-story .register-chapters.show-chapter {
+  z-index: 1000;
   display: flex;
-	z-index: 1000;
 }
 
 .my-story .register-chapters > li {
@@ -1214,64 +1212,16 @@ button.action-btn:hover {
 	color: var(--main-red);
 }
 
-.my-story nav .register-chapters > li:hover {
-	background-color: rgba(255,255,255,0.5);
-}
-
-.my-story nav .register-chapters > .add-chapter:hover > ul,
-.my-story nav .register-chapters > .add-chapter:focus > ul,
-.my-story nav .register-chapters > .add-chapter:active > ul {
-	display: block;
-}
-
-.my-story nav .register-chapters > li.active-menu {
-	background-color: rgba(255,255,255,0.5);
-}
-
-.my-story .register-chapters .add-chapter-btn {
-  display: block;
-  height: 5rem;
-  padding: 0;
-  border: 0;
-  font-size: 1.25rem;
-  background: none;
-	color: white;
-}
-
-.my-story .add-chapters-options {
-	display: none;
-	background-color: var(--main-red);
-	padding: 0;
-}
-
-.my-story .add-chapters-options li {
-	list-style: none;
-}
-
-.my-story .add-chapters-options li:hover {
-	background-color: rgba(255,255,255,0.5);
-}
-
-.my-story .add-chapters-options li a {
-	text-align: left;
-	justify-content: flex-start !important;
-}
-
 .my-story .personal-data {
   display: block;
-  margin: 1.5rem 5%;
+  margin: var(--main-spacing) 5%;
 }
 
-.my-story .personal-data h1 {
-  font-weight: 400;
-  font-size: 2.5rem;
-}
-
-/* article */
+/* Article */
 .my-story main {
+  width: calc(100% - 5rem);
 	margin-left: 5rem;
 	margin-top: 5rem;
-  width: calc(100% - 5rem);
 }
 
 .my-story article {
@@ -1283,46 +1233,32 @@ button.action-btn:hover {
 	min-height: 100vh;
 }
 
-/* sticky title */
+/* Sticky title */
 .my-story .title-sticky {
  	position: sticky;
+  top: 0;
+  z-index: 0;
   padding: 2% 0;
-	top: 0;
-	padding: 2% 0;
- 	background-color: white;
-	z-index: 0;
- }
+ 	background-color: var(--main-white);
+}
 
 .my-story img.crosses {
-	width: 4em;
+	width: 4rem;
+  margin-bottom: var(--main-spacing);
 }
 
 .my-story h2 {
-	height: min-content;
-  font-weight: normal;
-  color: black;
   width: 100%;
 }
 
-.my-story h2 strong {
-	color: var(--main-red);
-	font-weight: bolder;
-}
-
-/* images grid */
+/* Images grid */
 .my-story main ul {
-	columns: 25vw 1;
-	margin: 0;
-	padding: 0;
+  padding: 0;
+  margin: 0;
+  -webkit-columns: 15rem 3;
+  -moz-columns: 15rem 3;
+	columns: 15rem 3;
 	list-style: none;
-}
-
-@media only screen and (min-width: 50em) {
-	.my-story main ul {
-		-webkit-columns: 20vw 3;
-		-moz-columns: 20vw 3;
-		columns: 20vw 3;
-	}
 }
 
 .my-story main ul li {
@@ -1356,7 +1292,7 @@ button.action-btn:hover {
 
 .my-story ul li div p:active,
 .my-story ul li div p:focus {
-	border: 1px solid black;
+	border: 1px solid var(--main-black);
 	outline: none;
 }
 
@@ -1378,7 +1314,7 @@ button.action-btn:hover {
 .my-story ul li div a:focus {
 	outline: 0;
 	padding-bottom: 1%;
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid var(--main-black);
 }
 
 .my-story ul li div a img {
@@ -1387,69 +1323,4 @@ button.action-btn:hover {
 
 .my-story ul li div:first-child img {
 	width: 100%;
-}
-
-/* add chapter form */
-.my-story .chapter-form-input label {
-	display: block;
-	margin-bottom: 2%;
-}
-
-/* explain button */
-#help {
-	background-color: var(--main-red);
-	color: white;
-	border: none;
-	width: 25px;
-	height: 25px;
-	border-radius: 50%;
-	margin-left: 95%;
-}
-
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%;
-}
-
-.modal-content h1 {
-	text-align: center;
-}
-
-.modal-content p {
-	width: 60%;
-	margin-left: 20%;
-	text-align: center;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
 }
