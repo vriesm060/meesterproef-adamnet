@@ -813,7 +813,7 @@ button.action-btn:hover {
 	max-height: 0;
 }
 .create-story .table-of-contents .open-menu {
-	max-height: 100vh;
+	max-height: none;
 }
 @media all and (min-width: 50em) {
   .create-story .table-of-contents .first {
