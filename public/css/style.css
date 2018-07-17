@@ -1038,6 +1038,7 @@ button.action-btn:hover {
 	background-color: var(--main-red);
 	box-shadow: 1px 1px 0px 4px rgba(0,0,0,.1);
 	transform: translateY(20vh);
+  transition: transform .7s;
 }
 @media all and (min-width: 50em) {
   .create-story .selected-images {
@@ -1047,7 +1048,10 @@ button.action-btn:hover {
 
 .show-selected-images {
 	transform: translateY(0) !important;
-	transition: transform .7s;
+}
+
+.create-story .selected-images a:hover {
+  opacity: .5;
 }
 
 .create-story .selected-images img {

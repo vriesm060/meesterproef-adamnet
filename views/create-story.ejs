@@ -212,10 +212,14 @@
 					var url = item.value;
 					var text = item.parentElement.childNodes[7].innerHTML;
 
+					var a = document.createElement('a');
 					var img = document.createElement('img');
+
 					img.src = url;
 					img.alt = text;
-					selectedImages.appendChild(img);
+
+					selectedImages.appendChild(a);
+					a.appendChild(img);
 
 					var newImages = document.querySelectorAll('.selected-images img');
 					newImages[newImages.length-1].scrollIntoView();
@@ -223,25 +227,16 @@
 					//add style
 					li.classList.add('hide-li');
 
-					img.addEventListener('click', function(){
-						//add number
-						span.innerHTML--;
+					a.addEventListener('click', function (e) {
+						e.preventDefault();
 
-						//delete item
-						var img = this;
-						var section = this.parentElement;
+						// Add image to popup:
+			      document.querySelector('.detail img').src = url;
+			      document.querySelector('.detail img').alt = text;
+			      document.querySelector('.detail p').textContent = text;
 
-						// label.style.opacity = '0';
-						// setTimeout(function(){
-							section.removeChild(img);
-						// }, 1000);
-
-						//add item
-						var inputHidden = document.querySelector('input[value="' + this.src + '"]');
-						var liHidden = inputHidden.parentElement.parentElement.parentElement;
-
-						li.classList.remove('hide-li');
-						inputHidden.checked = false;
+			      // Show the popup:
+			      document.querySelector('.detail').classList.add('show');
 					});
 
 				} else {
@@ -251,14 +246,19 @@
 					//show li item
 					li.classList.remove('hide-li');
 
-					//delete selected image
-					var images = document.querySelectorAll('.selected-images img');
-					for(var i = 0; i < images.length; i++) {
-						if(item.value == images[i].src) {
-							selectedImages.removeChild(images[i])
-						}
+					if (selectedImages.children.length == 1) {
+						selectedImages.classList.remove('show-selected-images');
+						submitButton.classList.remove('show-selected-images');
+						span.classList.remove('show-selected-images');
 					}
 
+					//delete selected image
+					var images = document.querySelectorAll('.selected-images a');
+					for (var i = 0; i < images.length; i++) {
+						if (item.value == images[i].children[0].src) {
+							selectedImages.removeChild(images[i]);
+						}
+					}
 				}
 			});
 		});
