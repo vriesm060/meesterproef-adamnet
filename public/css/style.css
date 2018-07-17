@@ -1,22 +1,62 @@
 :root {
-  --main-black: black;
-  --main-white: white;
-	--main-lightgrey: lightgrey;
-	--main-bg: LightSlateGrey;
-	--main-red: #DA121A;
+  /* Colors: */
+  --main-black: #000;
+  --main-white: #fff;
+	/* --main-lightgrey: lightgrey; */
+	/* --main-bg: LightSlateGrey; */
+	--main-red: #da121a;
+
+  /* Fonts: */
+  --font-family: helvetica, sans-serif;
+
+    /* Base font: */
+    --base-fz: 1em;
+    --base-fw: 400;
+    --base-lh: 1.4;
+
+    /* Heading font: */
+    --heading-fz: 2em;
+    --heading-fw: 700;
+    --heading-lh: 1;
+
+    /* Subheading font: */
+    --subheading-fz: 1.5em;
+    --subheading-fw: 400;
+    --subheading-lh: 1;
+
+    /* Form elements font: */
+    --form-fz: 1em;
+    --form-fw: 700;
+    --form-lh: 1;
 }
 
-body {
+/*
+====================
+  General
+====================
+*/
+
+html {
+  box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	font-family: helvetica, sans-serif;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+	/* font-family: helvetica, sans-serif; */
 }
 
 p, a, li {
 	font-size: 0.9em;
 }
 
-/* Popup box BEGIN */
+/*
+====================
+  Image detail
+====================
+*/
+
 .detail {
   background: rgba(0,0,0,.4);
   cursor: pointer;
@@ -83,7 +123,12 @@ p, a, li {
 	color: var(--main-white);
 }
 
-/* HOMEPAGE: INTRO */
+/*
+====================
+  Homepage
+====================
+*/
+
 /* radio buttons */
 .home section:first-of-type, .home section:last-of-type {
 	width: 90%;
