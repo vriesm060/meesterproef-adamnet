@@ -33,7 +33,7 @@
 				for (var i = 0; i < Object.keys(dataFirstQuery).length; i++) { %>
 					<li>
 						<a href="#year-<%- Object.keys(dataFirstQuery)[i] %>">
-							<h1 class="year-title"><%= Object.keys(dataFirstQuery)[i] %></h1>
+							<h2 class="year-title"><%= Object.keys(dataFirstQuery)[i] %></h2>
 						</a>
 					</li><%
 				} %>
@@ -122,7 +122,7 @@
 				} %>
 
 				<div class="next-page">
-					<button class="submit-chapter" type="submit">Opslaan</button>
+					<button class="submit-chapter action-btn" type="submit">Opslaan</button>
 					<span class="count-images"></span>
 				</div>
 			</form>
