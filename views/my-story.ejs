@@ -39,17 +39,16 @@
 			<button class="modal-close-btn" type="button">&times;</button>
 			<h1>Deel jouw herinneringenboek</h1>
 			<p>
-				Kopieër deze link om jouw herinneringenboek te delen met vrienden en familie.
+				Kopieer deze link om jouw herinneringenboek te delen met vrienden en familie.
 			</p>
 			<div class="copy-link">
-				<input type="text" name="copy-link" value="eenstukjenostalgie.amsterdam/my-story/S1zATlpmX">
-				<button type="button">Kopieër</button>
+				<input type="text" name="copy-link" value="<%- link %>">
+				<button type="button">Kopieer</button>
 			</div>
 		</div>
 	</div>
 
 	<script>
-
 		var share = {
 			button: document.querySelector('.action-btn'),
 			modal: document.querySelector('.modal-overlay'),
@@ -86,7 +85,6 @@
 		};
 
 		share.init();
-
 	</script>
 
 	<script>
