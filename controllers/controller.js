@@ -183,6 +183,14 @@ exports.postMyStoryPage = function (req, res, next) {
     currentStory.selection[year][chapter].push(item);
   });
 
+  var thisStory = req.session.stories.find(function (story) {
+    return story.id == id;
+  });
+
+  // database.splice(0, database.length);
+
+  database.push(thisStory);
+
   res.redirect('/my-story/' + id);
 }
 
