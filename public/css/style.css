@@ -90,6 +90,7 @@ select {
   font-size: var(--form-fz);
   font-weight: var(--form-fw);
   line-height: var(--form-lh);
+  -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
 }
@@ -140,6 +141,7 @@ button.action-btn:hover {
   position: relative;
   display: block;
   width: min-content;
+  max-width: calc(100vw - (2 * var(--main-spacing)));
   height: auto;
   max-height: 100%;
   padding: var(--main-spacing);
@@ -148,6 +150,7 @@ button.action-btn:hover {
 }
 
 .detail > div img {
+  width: auto;
   max-width: calc(100vw - (4 * var(--main-spacing)));
   margin-bottom: var(--main-spacing);
 }
