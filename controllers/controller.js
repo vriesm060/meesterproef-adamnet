@@ -148,8 +148,8 @@ exports.postMyStoryPage = function (req, res, next) {
 
   // Push all selected images with meta data in selection array:
   selectedImages.forEach(function (image) {
-    merged.find(function (item, i) {
-      if (item.img.value == image && i == 0) {
+    merged.filter(function (item, i) {
+      if (item.img.value == image) {
         selection.push(item);
       }
     });
