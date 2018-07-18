@@ -52,7 +52,9 @@
 
 		var share = {
 			button: document.querySelector('.action-btn'),
-			modal: document.querySelector('.detail'),
+			modal: document.querySelector('.modal-overlay'),
+			closeBtn: document.querySelector('.modal-close-btn'),
+			copyLink: document.querySelector('.copy-link'),
 			init: function () {
 				var self = this;
 
@@ -60,9 +62,26 @@
 					e.preventDefault();
 					self.openModal();
 				});
+
+				this.closeBtn.addEventListener('click', function (e) {
+					e.preventDefault();
+					self.closeModal();
+				});
+
+				this.copyLink.addEventListener('click', function (e) {
+					e.preventDefault();
+					self.copy(this.children[0]);
+				});
 			},
 			openModal: function () {
 				this.modal.classList.add('show');
+			},
+			closeModal: function () {
+				this.modal.classList.remove('show');
+			},
+			copy: function (el) {
+				el.select();
+				document.execCommand('copy');
 			}
 		};
 
