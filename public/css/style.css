@@ -1065,8 +1065,14 @@ button.action-btn:hover {
   }
 }
 
-.create-story .selected-images a:hover {
-  opacity: .5;
+.create-story .selected-images a {
+  transition: all .3s ease-in-out;
+  cursor: zoom-in;
+}
+.create-story .selected-images a:focus,
+.create-story .selected-images a:hover,
+.create-story .selected-images a:active {
+  transform: scale(.9,.9);
 }
 
 .create-story .selected-images img {
