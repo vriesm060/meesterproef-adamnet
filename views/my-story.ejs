@@ -19,6 +19,10 @@
 	<main class="content">
 		<section class="personal-data">
 			<h1>Jouw herinneringenboek</h1>
+			<button class="action-btn" type="button">
+				<img src="/images/share.svg" alt="Deel jouw herinneringenboek">
+				<span>Deel jouw herinneringenboek</span>
+			</button>
 		</section><%
 		years.forEach(function (year) { %>
 			<div class="year year-<%- year %>">
@@ -29,6 +33,42 @@
 			</div><%
 		}); %>
 	</main>
+
+	<div class="modal-overlay">
+		<div class="modal">
+			<button class="modal-close-btn" type="button">&times;</button>
+			<h1>Deel jouw herinneringenboek</h1>
+			<p>
+				Kopieër deze link om jouw herinneringenboek te delen met vrienden en familie.
+			</p>
+			<div class="copy-link">
+				<input type="text" name="copy-link" value="eenstukjenostalgie.amsterdam/my-story/S1zATlpmX">
+				<button type="button">Kopieër</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+		var share = {
+			button: document.querySelector('.action-btn'),
+			modal: document.querySelector('.detail'),
+			init: function () {
+				var self = this;
+
+				this.button.addEventListener('click', function (e) {
+					e.preventDefault();
+					self.openModal();
+				});
+			},
+			openModal: function () {
+				this.modal.classList.add('show');
+			}
+		};
+
+		share.init();
+
+	</script>
 
 	<script>
 		// Get the modal
