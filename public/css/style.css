@@ -90,6 +90,8 @@ select {
   font-size: var(--form-fz);
   font-weight: var(--form-fw);
   line-height: var(--form-lh);
+  -webkit-appearance: none;
+  appearance: none;
 }
 button:focus,
 button:hover,
@@ -1113,11 +1115,11 @@ button.action-btn:hover {
   color: var(--main-black);
   background-color: var(--main-white);
   text-align: center;
-	transform: translateY(30vh);
+	transform: translateY(35vh);
 }
 @media all and (min-width: 50em) {
   .create-story .next-page .submit-chapter + span {
-    bottom: 26vh;
+    bottom: 27.5vh;
   }
 }
 
