@@ -801,6 +801,7 @@ button.action-btn:hover {
 }
 
 .create-story .table-of-contents ol {
+  z-index: 99;
   display: block;
   overflow: scroll;
   height: calc(100vh - 4rem);
